@@ -121,15 +121,10 @@ async function run() {
 
     // All toys with search function
     app.get("/all-toys", async (req, res) => {
-      // Page Number
       const page = Number(req.query.page) || 0;
-      // Page Per Data
       const limit = Number(req.query.limit) || 20;
-
-      // Search Text
       const searchTxt = req.query.search;
 
-      // find Data using search
       const cursor = toysCollection
         .find({ toyName: { $regex: searchTxt, $options: "i" } })
         .limit(limit);
@@ -137,21 +132,12 @@ async function run() {
       res.send(result);
     });
 
-    // Toys Added by user Api
     app.get("/my-toys", async (req, res) => {
-      // Page Number
       const page = Number(req.query.page) || 0;
-      // Page Per Data
       const limit = Number(req.query.limit) || 20;
-      // User Email
       const email = req.query.email;
-      // Sort Value
       const sort = Number(req.query.sort) || 1;
-
-      // Email Query
       const emailQuery = { sellerEmail: email };
-
-      // Find Data
       const cursor = toysCollection
         .find(emailQuery)
         .limit(limit)
